@@ -121,7 +121,7 @@ const DefaultLayout = ({ data, children, bodyClass, isHome }) => {
                                         My name is Javaad Patel. I'm a software
                                         developer specializing in cloud
                                         architecture, identity management and
-                                        distributed systems
+                                        distributed systems.
                                     </p>
                                     <br />
                                     <div>
