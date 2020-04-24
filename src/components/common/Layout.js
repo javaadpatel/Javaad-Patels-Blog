@@ -23,6 +23,7 @@ import "../../styles/semantic-ui/image.css";
  */
 const DefaultLayout = ({ data, children, bodyClass, isHome }) => {
     const site = data.allGhostSettings.edges[0].node;
+    console.log({ site });
     return (
         <>
             <Helmet>
@@ -31,11 +32,14 @@ const DefaultLayout = ({ data, children, bodyClass, isHome }) => {
                     src="https://www.googletagmanager.com/gtag/js?id=UA-164501208-1"
                 ></script>
                 <script>
-                    window.dataLayer = window.dataLayer || []; function gtag()
-                    {dataLayer.push(arguments)}
-                    gtag('js', new Date()); gtag('config', 'UA-164501208-1');
+                    {`
+                    window.dataLayer = window.dataLayer || [];
+                    function gtag(){dataLayer.push(arguments);}
+                    gtag('js', new Date());
+                  
+                    gtag('config', 'UA-164501208-1');
+                    `}
                 </script>
-
                 <html lang={site.lang} />
                 <style type="text/css">{`${site.codeinjection_styles}`}</style>
                 <body className={bodyClass} />
