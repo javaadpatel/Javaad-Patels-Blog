@@ -1091,6 +1091,13 @@ h6 {
     padding-left: 100px;
 }
 
+@media (max-width: 500px) {
+    .subscription-form-card {
+        padding-right: 50px;
+        padding-left: 50px;
+    }
+}
+
 /* Koenig Styles
 /* ---------------------------------------------------------- */
 
