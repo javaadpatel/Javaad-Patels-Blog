@@ -119,7 +119,7 @@ const DefaultLayout = ({ data, children, bodyClass, isHome }) => {
                                     </h1>
                                     <p className="site-banner-desc">
                                         My name is Javaad Patel. I'm a software
-                                        developer specializing in cloud
+                                        engineer specializing in cloud
                                         architecture, identity management and
                                         distributed systems.
                                     </p>
