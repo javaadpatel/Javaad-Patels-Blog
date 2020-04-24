@@ -602,6 +602,23 @@ h6 {
     object-fit: cover;
 }
 
+/* Begin Code Highlighting Styles*/
+.post-full-content pre strong {
+    color: white;
+}
+
+.post-full-content pre {
+    line-height: 1;
+}
+
+.post-full-content pre code {
+    white-space: pre-wrap;
+    hyphens: auto;
+    line-height: 0.7;
+    font-size: 0.7em;
+}
+
+/* End Code Highlighting Styles*/
 .content-body h1,
 .content-body h2,
 .content-body h3,
