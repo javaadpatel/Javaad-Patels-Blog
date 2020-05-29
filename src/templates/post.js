@@ -2,6 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { graphql } from "gatsby";
 import Helmet from "react-helmet";
+import TalkyardCommentsIframe from "@debiki/gatsby-plugin-talkyard";
 
 import { Layout } from "../components/common";
 import { MetaData } from "../components/common/meta";
@@ -51,6 +52,7 @@ const Post = ({ data, location }) => {
                                 dangerouslySetInnerHTML={{ __html: post.html }}
                             />
                         </section>
+                        <TalkyardCommentsIframe />
                     </article>
                 </div>
             </Layout>
