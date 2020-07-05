@@ -902,8 +902,8 @@ h6 {
     margin: 0 0 10px 0;
     width: 100%;
     height: 250px;
-    background: var(--color-secondary) no-repeat center center;
-    background-size: cover;
+    background: #fff no-repeat center center;
+    background-size: contain;
 }
 
 .post-card-footer {
@@ -1132,6 +1132,8 @@ h6 {
     border-radius: 3px;
     box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.15), 0 0 1px rgba(0, 0, 0, 0.09);
 }
+
+.kg-width-wide img {}
 
 .kg-bookmark-container:hover {
     color: var(--color-base);
