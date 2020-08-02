@@ -97,7 +97,7 @@ const SubscribeForm = () => {
                             <FontAwesomeIcon icon={faPaperPlane} size="2x" />
                         </Container>
                         <br />
-                        <Card.Header>Sign up for the latest news</Card.Header>
+                        <Card.Header>Subscribe to keep reading awesome articles.</Card.Header>
                         <Card.Description>
                             <Grid columns={1} padded="horizontally">
                                 <Grid.Column>
