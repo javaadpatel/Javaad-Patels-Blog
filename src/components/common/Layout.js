@@ -23,7 +23,6 @@ import "../../styles/semantic-ui/image.css";
  */
 const DefaultLayout = ({ data, children, bodyClass, isHome }) => {
     const site = data.allGhostSettings.edges[0].node;
-    console.log({ site });
     return (
         <>
             <Helmet>
