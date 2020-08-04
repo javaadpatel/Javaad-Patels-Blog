@@ -1,9 +1,13 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import PropTypes from 'prop-types'
 import { graphql } from 'gatsby'
 
 import { Layout, PostCard, Pagination } from '../components/common'
 import { MetaData } from '../components/common/meta'
+import axios from "axios";
+import _ from 'lodash';
+const { googleAnalyticsBaseUrl } = require('../utils/siteConfig')
+
 
 /**
 * Main index page (home page)
@@ -14,24 +18,73 @@ import { MetaData } from '../components/common/meta'
 *
 */
 const Index = ({ data, location, pageContext }) => {
-    const posts = data.allGhostPost.edges
+    const posts = data.allGhostPost.edges;
+
+    const [pageViews, setPageViews] = useState([]);
+
+    /**
+     * Fetches google analytics page views on page load
+     */
+    useEffect(() => {
+
+        async function fetchGooglePageViews() {
+            try{
+                const response = await axios
+                    .get(`${googleAnalyticsBaseUrl}/.netlify/functions/server/getViews`, {
+                        timeout: 1000 //ms
+                    });
+                
+                if (response.status == 200){
+                    var pageViewsArray = response.data;
+                    var pageViews = pageViewsArray.map(function(p) {
+                        return {
+                            path: p[0],
+                            views: p[1]
+                        }
+                    })
+                    setPageViews(pageViews)
+                }
+            }catch(e){
+                console.error(`Error fetching page views. Error: ${e}`)
+            }
+        }
+
+        if (pageViews.length == 0) {
+            fetchGooglePageViews();
+        }
+    }, [pageViews]);
+
+    /**
+     * Extracts the page views from the pageViews colletion
+     * @param {*} pagePath the current post's page path
+     */
+    const getPageViewsForPage = (pagePath) => {
+        pagePath = `/${pagePath}/`;
+        var pageViewElement = _.find(pageViews, ['path', pagePath]);
+        if (pageViewElement !== undefined)
+            return pageViewElement.views;
+        
+        return null;
+    }
+
 
     return (
         <>
             <MetaData location={location} />
             <Layout isHome={true}>
                 <div className="container">
+                    {pageViews.length == 0 ? <div>LOADING!</div>: 
                     <section className="post-feed">
-                        {posts.map(({ node }) => (
+                        {posts.map(({ node, index }) => (
                             // The tag below includes the markup for each post - components/common/PostCard.js
-                            <PostCard key={node.id} post={node} />
+                            <PostCard key={node.id} post={node} views={getPageViewsForPage(node.slug)}/>
                         ))}
-                    </section>
+                    </section>}
                     <Pagination pageContext={pageContext} />
                 </div>
             </Layout>
         </>
-    )
+    ) 
 }
 
 Index.propTypes = {

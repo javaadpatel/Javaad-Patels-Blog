@@ -4,7 +4,7 @@ import { Link } from 'gatsby'
 import { Tags } from '@tryghost/helpers-gatsby'
 import { readingTime as readingTimeHelper } from '@tryghost/helpers'
 
-const PostCard = ({ post }) => {
+const PostCard = ({ post, views }) => {
     const url = `/${post.slug}/`
     const readingTime = readingTimeHelper(post)
 
@@ -31,7 +31,11 @@ const PostCard = ({ post }) => {
                     <span>{ post.primary_author.name }</span>
                 </div>
                 <div className="post-card-footer-right">
-                    <div>{readingTime}</div>
+                    <div>
+                        {views} views {" ·  "}
+                        
+                        {readingTime}
+                    </div>
                 </div>
             </footer>
         </Link>

@@ -3,6 +3,8 @@ module.exports = {
 
     postsPerPage: 12, // Number of posts shown on paginated pages (changes this requires sometimes to delete the cache)
 
+    googleAnalyticsBaseUrl: 'http://localhost:3000',
+
     siteTitleMeta: `Javaad Patel's Blog`, // This allows an alternative site title for meta data for pages.
     siteDescriptionMeta: `Blog posts about cloud architecture, identity management and distributed systems`, // This allows an alternative site description for meta data for pages.
 
