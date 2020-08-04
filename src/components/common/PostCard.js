@@ -32,7 +32,7 @@ const PostCard = ({ post, views }) => {
                 </div>
                 <div className="post-card-footer-right">
                     <div>
-                        {views} views {" ·  "}
+                        {views === null ? "": `${views} views ·  `}
                         
                         {readingTime}
                     </div>
