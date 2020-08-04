@@ -28,7 +28,7 @@ const Tag = ({ data, location, pageContext }) => {
             try{
                 const response = await axios
                     .get(`${googleAnalyticsBaseUrl}/.netlify/functions/server/getViews`, {
-                        timeout: 1000 //ms
+                        timeout: 5000 //ms
                     });
                 
                 if (response.status == 200){
