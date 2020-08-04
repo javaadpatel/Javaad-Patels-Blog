@@ -23,7 +23,6 @@ const Tag = ({ data, location, pageContext }) => {
      * Fetches google analytics page views on page load
      */
     useEffect(() => {
-
         async function fetchGooglePageViews() {
             try{
                 const response = await axios
