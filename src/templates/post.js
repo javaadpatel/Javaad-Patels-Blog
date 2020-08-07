@@ -3,6 +3,17 @@ import PropTypes from "prop-types";
 import { graphql } from "gatsby";
 import Helmet from "react-helmet";
 import TalkyardCommentsIframe from "@debiki/gatsby-plugin-talkyard";
+import {Segment, Header, Icon} from "semantic-ui-react";
+import {
+    TwitterShareButton, 
+    TwitterIcon, 
+    RedditShareButton, 
+    RedditIcon, 
+    EmailShareButton, 
+    EmailIcon,
+    LinkedinShareButton,
+    LinkedinIcon
+} from "react-share";
 
 import { Layout } from "../components/common";
 import { MetaData } from "../components/common/meta";
@@ -20,6 +31,8 @@ import "prismjs/plugins/line-numbers/prism-line-numbers.js";
 
 const Post = ({ data, location }) => {
     const post = data.ghostPost;
+    const postShareUrl = location.href;
+    const postShareTitle = 'Found this amazing article, check it out';
 
     useEffect(() => {
         // call the highlightAll() function to style our code blocks
@@ -52,6 +65,34 @@ const Post = ({ data, location }) => {
                                 dangerouslySetInnerHTML={{ __html: post.html }}
                             />
                         </section>
+                        <div style={{float:'right', paddingBottom: '1em', fontFamily: 'Georgia, Times, serif'}}>
+                            Share this post on {"   "}
+                            <TwitterShareButton
+                                url={postShareUrl}
+                                title={postShareTitle}
+                                related={["@javaad_patel"]}
+                            >
+                                <TwitterIcon size={32} round />
+                            </TwitterShareButton>
+                            <LinkedinShareButton url={postShareUrl} title={postShareTitle} source={"https://javaadpatel.com"} >
+                                <LinkedinIcon size={32} round />
+                            </LinkedinShareButton>
+                            <RedditShareButton
+                                url={postShareUrl}
+                                title={postShareTitle}
+                                windowWidth={660}
+                                windowHeight={460}
+                            >
+                                <RedditIcon size={32} round />
+                            </RedditShareButton>
+                            <EmailShareButton
+                                url={postShareUrl}
+                                subject={postShareTitle}
+                                body="body"
+                            >
+                                <EmailIcon size={32} round />
+                            </EmailShareButton>
+                        </div>
                         <TalkyardCommentsIframe />
                     </article>
                 </div>

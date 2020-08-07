@@ -115,6 +115,20 @@ const DefaultLayout = ({ data, children, bodyClass, isHome }) => {
                                                 />
                                             </div>
                                         </a>
+                                        <a
+                                            href="https://twitter.com/javaad_patel"
+                                            className="site-nav-item"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            <div>
+                                                <img
+                                                    className="site-nav-icon"
+                                                    src="/images/icons/twitter.png"
+                                                    alt="Twitter"
+                                                />
+                                            </div>
+                                        </a>
                                     </div>
                                 ) : null}
                             </div>
