@@ -183,7 +183,7 @@ module.exports = {
         `gatsby-plugin-catch-links`,
         `gatsby-plugin-react-helmet`,
         `gatsby-plugin-force-trailing-slashes`,
-        `gatsby-plugin-offline`,
+        //`gatsby-plugin-offline`, //removed so that latest content always shows up.
         /**
          * Talkyard Plugin
          */
