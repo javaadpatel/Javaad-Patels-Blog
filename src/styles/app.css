@@ -363,7 +363,7 @@ body {
 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    -moz-font-feature-settings: "liga"on;
+    -moz-font-feature-settings: "liga" on;
 }
 
 ::selection {
@@ -1133,7 +1133,8 @@ h6 {
     box-shadow: 0 2px 5px -1px rgba(0, 0, 0, 0.15), 0 0 1px rgba(0, 0, 0, 0.09);
 }
 
-.kg-width-wide img {}
+.kg-width-wide img {
+}
 
 .kg-bookmark-container:hover {
     color: var(--color-base);
@@ -1236,4 +1237,8 @@ figure figcaption {
 
 code {
     background: rgba(0, 0, 0, 0.075);
+}
+
+.related-articles-grid {
+    margin-bottom: 0.8em !important;
 }

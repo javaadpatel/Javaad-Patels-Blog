@@ -3,16 +3,21 @@ import PropTypes from "prop-types";
 import { graphql } from "gatsby";
 import Helmet from "react-helmet";
 import TalkyardCommentsIframe from "@debiki/gatsby-plugin-talkyard";
-import {Segment, Header, Icon} from "semantic-ui-react";
+import { Grid } from "semantic-ui-react";
+import "../styles/semantic-ui/grid.css";
+import "../styles/semantic-ui/button.css";
+import { PostCard } from "../components/common";
+import _ from "lodash";
+
 import {
-    TwitterShareButton, 
-    TwitterIcon, 
-    RedditShareButton, 
-    RedditIcon, 
-    EmailShareButton, 
+    TwitterShareButton,
+    TwitterIcon,
+    RedditShareButton,
+    RedditIcon,
+    EmailShareButton,
     EmailIcon,
     LinkedinShareButton,
-    LinkedinIcon
+    LinkedinIcon,
 } from "react-share";
 
 import { Layout } from "../components/common";
@@ -31,8 +36,35 @@ import "prismjs/plugins/line-numbers/prism-line-numbers.js";
 
 const Post = ({ data, location }) => {
     const post = data.ghostPost;
+    const allPosts = data.allGhostPost.edges;
+    let firstRelatedPost;
+    let secondRelatedPost;
+
+    const findRelatedArticles = () => {
+        const primaryTag = post.primary_tag.slug;
+        const secondaryTag = _.chain(post.tags)
+            .filter(function (p) {
+                return p.slug !== primaryTag;
+            })
+            .head()
+            .value()?.slug;
+        const primaryRelatedArticles = _.chain(allPosts)
+            .filter(function ({ node }) {
+                return (
+                    node.tags.some(function ({ slug }) {
+                        return slug == primaryTag || slug == secondaryTag;
+                    }) && node.id !== post.id
+                );
+            })
+            .value();
+
+        firstRelatedPost = primaryRelatedArticles[0].node;
+        secondRelatedPost = primaryRelatedArticles[1].node;
+    };
+    findRelatedArticles();
+
     const postShareUrl = location.href;
-    const postShareTitle = 'Found this amazing article, check it out';
+    const postShareTitle = "Found this amazing article, check it out";
 
     useEffect(() => {
         // call the highlightAll() function to style our code blocks
@@ -65,7 +97,13 @@ const Post = ({ data, location }) => {
                                 dangerouslySetInnerHTML={{ __html: post.html }}
                             />
                         </section>
-                        <div style={{float:'right', paddingBottom: '1em', fontFamily: 'Georgia, Times, serif'}}>
+                        <div
+                            style={{
+                                float: "right",
+                                paddingBottom: "1em",
+                                fontFamily: "Georgia, Times, serif",
+                            }}
+                        >
                             Share this post on {"   "}
                             <TwitterShareButton
                                 url={postShareUrl}
@@ -74,7 +112,11 @@ const Post = ({ data, location }) => {
                             >
                                 <TwitterIcon size={32} round />
                             </TwitterShareButton>
-                            <LinkedinShareButton url={postShareUrl} title={postShareTitle} source={"https://javaadpatel.com"} >
+                            <LinkedinShareButton
+                                url={postShareUrl}
+                                title={postShareTitle}
+                                source={"https://javaadpatel.com"}
+                            >
                                 <LinkedinIcon size={32} round />
                             </LinkedinShareButton>
                             <RedditShareButton
@@ -94,6 +136,36 @@ const Post = ({ data, location }) => {
                             </EmailShareButton>
                         </div>
                         <TalkyardCommentsIframe />
+                        <Grid
+                            inverted
+                            container
+                            stackable
+                            columns="equal"
+                            divided
+                            className="related-articles-grid"
+                        >
+                            <Grid.Row textAlign="center">
+                                <Grid.Column>
+                                    <strong>You might also enjoy</strong>
+                                </Grid.Column>
+                            </Grid.Row>
+                            <Grid.Row textAlign="center">
+                                <Grid.Column>
+                                    <PostCard
+                                        key={firstRelatedPost.id}
+                                        post={firstRelatedPost}
+                                        views={null}
+                                    />
+                                </Grid.Column>
+                                <Grid.Column>
+                                    <PostCard
+                                        key={secondRelatedPost.id}
+                                        post={secondRelatedPost}
+                                        views={null}
+                                    />
+                                </Grid.Column>
+                            </Grid.Row>
+                        </Grid>
                     </article>
                 </div>
             </Layout>
@@ -109,6 +181,7 @@ Post.propTypes = {
             html: PropTypes.string.isRequired,
             feature_image: PropTypes.string,
         }).isRequired,
+        allGhostPost: PropTypes.object.isRequired,
     }).isRequired,
     location: PropTypes.object.isRequired,
 };
@@ -119,6 +192,17 @@ export const postQuery = graphql`
     query($slug: String!) {
         ghostPost(slug: { eq: $slug }) {
             ...GhostPostFields
+        }
+        allGhostPost(
+            sort: { order: DESC, fields: [published_at] }
+            limit: 10
+            skip: 0
+        ) {
+            edges {
+                node {
+                    ...GhostPostFields
+                }
+            }
         }
     }
 `;
