@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useRef } from "react";
 import PropTypes from "prop-types";
 import { graphql } from "gatsby";
 import Helmet from "react-helmet";
 import TalkyardCommentsIframe from "@debiki/gatsby-plugin-talkyard";
-import { Grid } from "semantic-ui-react";
+import { Grid, Segment, Rail, Sticky, Ref, Container } from "semantic-ui-react";
 import "../styles/semantic-ui/grid.css";
 import "../styles/semantic-ui/button.css";
+import "../styles/semantic-ui/rail.css";
+import "../styles/semantic-ui/sticky.css";
+import "../styles/semantic-ui/container.css";
 import { PostCard } from "../components/common";
 import _ from "lodash";
 
@@ -35,6 +38,7 @@ import "prismjs/plugins/line-numbers/prism-line-numbers.js";
  */
 
 const Post = ({ data, location }) => {
+    const stickyRef = useRef(null);
     const post = data.ghostPost;
     const allPosts = data.allGhostPost.edges;
     let firstRelatedPost;
@@ -71,11 +75,39 @@ const Post = ({ data, location }) => {
         Prism.highlightAll();
     });
 
+    /*Load Table of Contents*/
+    useEffect(() => {
+        /*https://stackoverflow.com/a/34425083*/
+        const script = document.createElement("script");
+        script.src =
+            "https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.10.0/tocbot.min.js";
+        script.async = false;
+
+        script.onload = () => {
+            {
+                tocbot.init({
+                    tocSelector: ".toc",
+                    contentSelector: ".content-body",
+                    hasInnerContainers: true,
+                });
+            }
+        };
+        document.body.appendChild(script);
+
+        return () => {
+            document.body.removeChild(script);
+        };
+    }, []);
+
     return (
         <>
             <MetaData data={data} location={location} type="article" />
             <Helmet>
                 <style type="text/css">{`${post.codeinjection_styles}`}</style>
+                <link
+                    rel="stylesheet"
+                    href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.10.0/tocbot.css"
+                ></link>
             </Helmet>
             <Layout>
                 <div className="container">
@@ -90,12 +122,36 @@ const Post = ({ data, location }) => {
                         ) : null}
                         <section className="post-full-content">
                             <h1 className="content-title">{post.title}</h1>
+                            <Grid centered columns={1} stackable>
+                                <Grid.Column>
+                                    <Ref innerRef={stickyRef}>
+                                        <>
+                                            <section
+                                                className="content-body load-external-scripts"
+                                                dangerouslySetInnerHTML={{
+                                                    __html: post.html,
+                                                }}
+                                            />
 
-                            {/* The main post content */}
-                            <section
-                                className="content-body load-external-scripts"
-                                dangerouslySetInnerHTML={{ __html: post.html }}
-                            />
+                                            <Rail position="right">
+                                                <Sticky
+                                                    offset={100}
+                                                    context={stickyRef}
+                                                >
+                                                    <Segment>
+                                                        <h3 className="content">
+                                                            Table of Contents
+                                                        </h3>
+                                                        <aside class="toc-container">
+                                                            <div class="toc"></div>
+                                                        </aside>
+                                                    </Segment>
+                                                </Sticky>
+                                            </Rail>
+                                        </>
+                                    </Ref>
+                                </Grid.Column>
+                            </Grid>
                         </section>
                         <div
                             style={{
