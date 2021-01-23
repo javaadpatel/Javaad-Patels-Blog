@@ -34,7 +34,7 @@ const PostCard = ({ post, views }) => {
             </header>
             <section className="post-card-excerpt">{post.excerpt}</section>
             <footer className="post-card-footer">
-                <div className="post-card-footer-left">
+                {/* <div className="post-card-footer-left">
                     <div className="post-card-avatar">
                         {post.primary_author.profile_image ? (
                             <img
@@ -50,8 +50,8 @@ const PostCard = ({ post, views }) => {
                             />
                         )}
                     </div>
-                    {/* <span>{post.primary_author.name}</span> */}
-                </div>
+                    <span>{post.primary_author.name}</span>
+                </div> */}
                 <div className="post-card-footer-right">
                     <div>
                         {`${post.published_at_pretty} ·  `}

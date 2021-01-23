@@ -97,7 +97,7 @@ const SubscribeForm = () => {
                             <FontAwesomeIcon icon={faPaperPlane} size="2x" />
                         </Container>
                         <br />
-                        <Card.Header>Subscribe to keep reading awesome articles.</Card.Header>
+                        <Card.Header>Subscribe to get updates on my latest content.</Card.Header>
                         <Card.Description>
                             <Grid columns={1} padded="horizontally">
                                 <Grid.Column>
@@ -145,7 +145,7 @@ const SubscribeForm = () => {
                                             color="black"
                                             id="mc-embedded-subscribe"
                                         >
-                                            Subscribe Now
+                                            SUBSCRIBE
                                         </Button>
                                     </Form>
                                 </Grid.Column>
