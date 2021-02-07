@@ -948,6 +948,7 @@ ol.toc-list {
 .post-card-footer-right {
     display: flex;
     flex-direction: column;
+    float: right;
 }
 
 .post-card-avatar {

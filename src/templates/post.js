@@ -41,8 +41,8 @@ const Post = ({ data, location }) => {
     const stickyRef = useRef(null);
     const post = data.ghostPost;
     const allPosts = data.allGhostPost.edges;
-    let firstRelatedPost;
-    let secondRelatedPost;
+    let relatedPosts;
+    let relatedPostsLimit = 2;
 
     const findRelatedArticles = () => {
         const primaryTag = post.primary_tag.slug;
@@ -62,8 +62,12 @@ const Post = ({ data, location }) => {
             })
             .value();
 
-        firstRelatedPost = primaryRelatedArticles[0].node;
-        secondRelatedPost = primaryRelatedArticles[1].node;
+        relatedPosts = _.map(
+            _.take(primaryRelatedArticles, relatedPostsLimit),
+            (article, key) => {
+                return article.node;
+            }
+        );
     };
     findRelatedArticles();
 
@@ -192,36 +196,37 @@ const Post = ({ data, location }) => {
                             </EmailShareButton>
                         </div>
                         <TalkyardCommentsIframe />
-                        <Grid
-                            inverted
-                            container
-                            stackable
-                            columns="equal"
-                            divided
-                            className="related-articles-grid"
-                        >
-                            <Grid.Row textAlign="center">
-                                <Grid.Column>
-                                    <strong>You might also enjoy</strong>
-                                </Grid.Column>
-                            </Grid.Row>
-                            <Grid.Row textAlign="center">
-                                <Grid.Column>
-                                    <PostCard
-                                        key={firstRelatedPost.id}
-                                        post={firstRelatedPost}
-                                        views={null}
-                                    />
-                                </Grid.Column>
-                                <Grid.Column>
-                                    <PostCard
-                                        key={secondRelatedPost.id}
-                                        post={secondRelatedPost}
-                                        views={null}
-                                    />
-                                </Grid.Column>
-                            </Grid.Row>
-                        </Grid>
+                        {!_.isEmpty(relatedPosts) ? (
+                            <Grid
+                                inverted
+                                container
+                                stackable
+                                columns="equal"
+                                divided
+                                className="related-articles-grid"
+                            >
+                                <Grid.Row textAlign="center">
+                                    <Grid.Column>
+                                        <strong>You might also enjoy</strong>
+                                    </Grid.Column>
+                                </Grid.Row>
+                                <Grid.Row textAlign="center">
+                                    {_.map(relatedPosts, (post) => {
+                                        return (
+                                            <Grid.Column>
+                                                <PostCard
+                                                    key={post.id}
+                                                    post={post}
+                                                    views={null}
+                                                />
+                                            </Grid.Column>
+                                        );
+                                    })}
+                                </Grid.Row>
+                            </Grid>
+                        ) : (
+                            ""
+                        )}
                     </article>
                 </div>
             </Layout>
