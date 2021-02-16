@@ -200,18 +200,3 @@ exports.createPages = async ({ graphql, actions }) => {
         },
     });
 };
-
-exports.onCreateWebpackConfig = ({ stage, loaders, actions }) => {
-    if (stage === "build-html") {
-        actions.setWebpackConfig({
-            module: {
-                rules: [
-                    {
-                        test: "../src/components/common/ScrollArrow.js",
-                        use: loaders.null(),
-                    },
-                ],
-            },
-        });
-    }
-};

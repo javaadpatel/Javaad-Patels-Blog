@@ -8,18 +8,24 @@ const ScrollArrow = () => {
     const yOffset = 800;
 
     const checkScrollTop = () => {
-        if (!showScroll && window.pageYOffset > yOffset) {
-            setShowScroll(true);
-        } else if (showScroll && window.pageYOffset <= yOffset) {
-            setShowScroll(false);
+        if (typeof window !== `undefined`) {
+            if (!showScroll && window.pageYOffset > yOffset) {
+                setShowScroll(true);
+            } else if (showScroll && window.pageYOffset <= yOffset) {
+                setShowScroll(false);
+            }
         }
     };
 
     const scrollTop = () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        if (typeof window !== `undefined`) {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
     };
 
-    window.addEventListener("scroll", checkScrollTop);
+    if (typeof window !== `undefined`) {
+        window.addEventListener("scroll", checkScrollTop);
+    }
 
     return (
         <FontAwesomeIcon
