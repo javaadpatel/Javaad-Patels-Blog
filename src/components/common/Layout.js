@@ -4,7 +4,7 @@ import Helmet from "react-helmet";
 import { Link, StaticQuery, graphql } from "gatsby";
 import Img from "gatsby-image";
 import { Image, Label } from "semantic-ui-react";
-import { SubscribeForm, Header } from "../../components/common";
+import { SubscribeForm, Header, Footer } from "../../components/common";
 
 import { Navigation } from ".";
 import config from "../../utils/siteConfig";
@@ -58,7 +58,8 @@ const DefaultLayout = ({ data, children, bodyClass, isHome }) => {
 
                 <div className="viewport-bottom">
                     {/* The footer at the very bottom of the screen */}
-                    <footer className="site-foot">
+                    <Footer site={site} />
+                    {/* <footer className="site-foot">
                         <div className="site-foot-nav container">
                             <div className="site-foot-nav-left">
                                 <Link to="/">{site.title}</Link> ©{" "}
@@ -80,7 +81,7 @@ const DefaultLayout = ({ data, children, bodyClass, isHome }) => {
                                 />
                             </div>
                         </div>
-                    </footer>
+                    </footer> */}
                 </div>
             </div>
         </>

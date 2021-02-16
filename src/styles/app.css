@@ -804,6 +804,10 @@ ol.toc-list {
     height: 25px;
 }
 
+.site-footer {
+    height: 16px;
+}
+
 .site-mast {
     display: flex;
     align-items: center;

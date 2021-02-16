@@ -23,12 +23,12 @@ const Header = ({ site, isHome }) => {
                     <div className="site-mast-left">
                         {!isHome ? (
                             <Link to="/">
-                                <h3 className="site-title">{site.title}</h3>
-                                {/* <img
+                                {/* <h3 className="site-title">{site.title}</h3> */}
+                                <img
                                     className="site-logo"
-                                    src={site.logo}
-                                    alt={site.title}
-                                /> */}
+                                    src="/images/javaadpatel_logo_gray.svg"
+                                    alt="Javaad Patel"
+                                />
                             </Link>
                         ) : null}
                     </div>
@@ -54,9 +54,9 @@ const Header = ({ site, isHome }) => {
                             Hi!
                         </h1>
                         <p className="site-banner-desc">
-                            My name is Javaad Patel. I'm a software engineer
-                            specializing in cloud architecture, identity
-                            management and distributed systems.
+                            I'm Javaad Patel, a software engineer specializing
+                            in cloud architecture, identity management and
+                            distributed systems.
                         </p>
                         <br />
                         <div>

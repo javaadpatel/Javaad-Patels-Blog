@@ -5,3 +5,4 @@ export { default as Navigation } from "./Navigation";
 export { default as SubscribeForm } from "./SubscribeForm";
 export { default as ScrollArrow } from "./ScrollArrow";
 export { default as Header } from "./Header/Header";
+export { default as Footer } from "./Footer/Footer";
