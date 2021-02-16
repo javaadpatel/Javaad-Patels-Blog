@@ -1149,6 +1149,11 @@ ol.toc-list {
 /* Koenig Styles
 /* ---------------------------------------------------------- */
 
+.kg-image-card {
+    display: flex;
+    flex-direction: column;
+}
+
 .kg-bookmark-card {
     width: 100%;
     margin-top: 0;
