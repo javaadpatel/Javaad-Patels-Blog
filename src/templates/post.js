@@ -9,7 +9,7 @@ import "../styles/semantic-ui/button.css";
 import "../styles/semantic-ui/rail.css";
 import "../styles/semantic-ui/sticky.css";
 import "../styles/semantic-ui/container.css";
-import { PostCard } from "../components/common";
+import { PostCard, ScrollArrow } from "../components/common";
 import _ from "lodash";
 
 import {
@@ -136,6 +136,8 @@ const Post = ({ data, location }) => {
                                                     __html: post.html,
                                                 }}
                                             />
+
+                                            <ScrollArrow />
 
                                             <Rail position="right">
                                                 <Sticky
