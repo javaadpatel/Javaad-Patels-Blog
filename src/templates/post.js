@@ -93,6 +93,7 @@ const Post = ({ data, location }) => {
                     tocSelector: ".toc",
                     contentSelector: ".content-body",
                     hasInnerContainers: true,
+                    collapseDepth: 6,
                 });
             }
         };
