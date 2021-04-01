@@ -24,7 +24,8 @@
   ],
   "main": "n/a",
   "scripts": {
-    "serve": "gatsby build && NODE_ENV=production gatsby serve",
+    "serve": "gatsby build && gatsby serve",
+    "serve-prod": "gatsby build && NODE_ENV=production gatsby serve",
     "build": "gatsby build",
     "dev": "gatsby develop",
     "lint": "eslint . --ext .js --cache",
@@ -47,7 +48,7 @@
     "babel-plugin-prismjs": "^2.0.1",
     "babel-preset-gatsby": "^0.3.4",
     "cheerio": "1.0.0-rc.3",
-    "gatsby": "2.13.1",
+    "gatsby": "2.32.8",
     "gatsby-awesome-pagination": "0.3.5",
     "gatsby-image": "2.2.41",
     "gatsby-plugin-advanced-sitemap": "1.5.2",

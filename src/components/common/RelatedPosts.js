@@ -1,32 +1,36 @@
 import React from "react";
 import _ from "lodash";
+import flow from "lodash/fp/flow";
+import filter from "lodash/fp/filter";
+import head from "lodash/fp/head";
+
 import { Grid } from "semantic-ui-react";
-import {PostCard} from ".";
+import { PostCard } from ".";
 
 import "../../styles/semantic-ui/grid.css";
 
-const RelatedPosts = ({allPosts, post}) => {
-
+const RelatedPosts = ({ allPosts, post }) => {
     let relatedPosts;
     let relatedPostsLimit = 2;
 
     const findRelatedArticles = () => {
         const primaryTag = post.primary_tag.slug;
-        const secondaryTag = _.chain(post.tags)
-            .filter(function (p) {
+        const secondaryTag = flow(
+            filter(function (p) {
                 return p.slug !== primaryTag;
-            })
-            .head()
-            .value()?.slug;
-        const primaryRelatedArticles = _.chain(allPosts)
-            .filter(function ({ node }) {
+            }),
+            head
+        )(post.tags)?.slug;
+
+        const primaryRelatedArticles = flow(
+            filter(function ({ node }) {
                 return (
                     node.tags.some(function ({ slug }) {
                         return slug == primaryTag || slug == secondaryTag;
                     }) && node.id !== post.id
                 );
             })
-            .value();
+        )(allPosts);
 
         relatedPosts = _.map(
             _.take(primaryRelatedArticles, relatedPostsLimit),
@@ -67,10 +71,12 @@ const RelatedPosts = ({allPosts, post}) => {
                     })}
                 </Grid.Row>
             </Grid>
-        ) : <></>
-    }
+        ) : (
+            <></>
+        );
+    };
 
     return renderPosts(relatedPosts);
-}
+};
 
 export default RelatedPosts;

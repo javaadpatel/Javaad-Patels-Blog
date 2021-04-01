@@ -12,8 +12,6 @@ import "../styles/semantic-ui/container.css";
 import { ScrollArrow, ShareButtons, RelatedPosts } from "../components/common";
 import _ from "lodash";
 
-
-
 import { Layout } from "../components/common";
 import { MetaData } from "../components/common/meta";
 import { useEffect } from "react";
@@ -127,10 +125,7 @@ const Post = ({ data, location }) => {
                             postShareUrl={postShareUrl}
                         />
                         <TalkyardCommentsIframe />
-                        <RelatedPosts
-                            allPosts = {allPosts}
-                            post= {post}
-                        />
+                        <RelatedPosts allPosts={allPosts} post={post} />
                         <BuyMeACoffee />
                     </article>
                 </div>
@@ -161,7 +156,7 @@ export const postQuery = graphql`
         }
         allGhostPost(
             sort: { order: DESC, fields: [published_at] }
-            limit: 10
+            limit: 15
             skip: 0
         ) {
             edges {
