@@ -18,7 +18,7 @@ const Footer = ({ site }) => {
                             alt="Javaad Patel"
                         />
                     </Link>{" "}
-                    © {new Date().getFullYear()}
+                    © 2020 - {new Date().getFullYear()}
                 </div>
                 <div className="site-foot-nav-right">
                     <Navigation

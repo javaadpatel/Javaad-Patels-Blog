@@ -3,25 +3,16 @@ import PropTypes from "prop-types";
 import { graphql } from "gatsby";
 import Helmet from "react-helmet";
 import TalkyardCommentsIframe from "@debiki/gatsby-plugin-talkyard";
-import { Grid, Segment, Rail, Sticky, Ref, Container } from "semantic-ui-react";
+import { Grid, Segment, Rail, Sticky, Ref } from "semantic-ui-react";
 import "../styles/semantic-ui/grid.css";
 import "../styles/semantic-ui/button.css";
 import "../styles/semantic-ui/rail.css";
 import "../styles/semantic-ui/sticky.css";
 import "../styles/semantic-ui/container.css";
-import { PostCard, ScrollArrow } from "../components/common";
+import { ScrollArrow, ShareButtons, RelatedPosts } from "../components/common";
 import _ from "lodash";
 
-import {
-    TwitterShareButton,
-    TwitterIcon,
-    RedditShareButton,
-    RedditIcon,
-    EmailShareButton,
-    EmailIcon,
-    LinkedinShareButton,
-    LinkedinIcon,
-} from "react-share";
+
 
 import { Layout } from "../components/common";
 import { MetaData } from "../components/common/meta";
@@ -29,6 +20,7 @@ import { useEffect } from "react";
 
 import Prism from "prismjs";
 import "prismjs/plugins/line-numbers/prism-line-numbers.js";
+import BuyMeACoffee from "../components/common/BuyMeACoffee";
 
 /**
  * Single post view (/:slug)
@@ -41,36 +33,6 @@ const Post = ({ data, location }) => {
     const stickyRef = useRef(null);
     const post = data.ghostPost;
     const allPosts = data.allGhostPost.edges;
-    let relatedPosts;
-    let relatedPostsLimit = 2;
-
-    const findRelatedArticles = () => {
-        const primaryTag = post.primary_tag.slug;
-        const secondaryTag = _.chain(post.tags)
-            .filter(function (p) {
-                return p.slug !== primaryTag;
-            })
-            .head()
-            .value()?.slug;
-        const primaryRelatedArticles = _.chain(allPosts)
-            .filter(function ({ node }) {
-                return (
-                    node.tags.some(function ({ slug }) {
-                        return slug == primaryTag || slug == secondaryTag;
-                    }) && node.id !== post.id
-                );
-            })
-            .value();
-
-        relatedPosts = _.map(
-            _.take(primaryRelatedArticles, relatedPostsLimit),
-            (article, key) => {
-                return article.node;
-            }
-        );
-    };
-    findRelatedArticles();
-
     const postShareUrl = location.href;
     const postShareTitle = "Found this amazing article, check it out";
 
@@ -160,76 +122,16 @@ const Post = ({ data, location }) => {
                                 </Grid.Column>
                             </Grid>
                         </section>
-                        <div
-                            style={{
-                                float: "right",
-                                paddingBottom: "1em",
-                                fontFamily: "Georgia, Times, serif",
-                            }}
-                        >
-                            Share this post on {"   "}
-                            <TwitterShareButton
-                                url={postShareUrl}
-                                title={postShareTitle}
-                                related={["@javaad_patel"]}
-                            >
-                                <TwitterIcon size={32} round />
-                            </TwitterShareButton>
-                            <LinkedinShareButton
-                                url={postShareUrl}
-                                title={postShareTitle}
-                                source={"https://javaadpatel.com"}
-                            >
-                                <LinkedinIcon size={32} round />
-                            </LinkedinShareButton>
-                            <RedditShareButton
-                                url={postShareUrl}
-                                title={postShareTitle}
-                                windowWidth={660}
-                                windowHeight={460}
-                            >
-                                <RedditIcon size={32} round />
-                            </RedditShareButton>
-                            <EmailShareButton
-                                url={postShareUrl}
-                                subject={postShareTitle}
-                                body="body"
-                            >
-                                <EmailIcon size={32} round />
-                            </EmailShareButton>
-                        </div>
+                        <ShareButtons
+                            postShareTitle={postShareTitle}
+                            postShareUrl={postShareUrl}
+                        />
                         <TalkyardCommentsIframe />
-                        {!_.isEmpty(relatedPosts) ? (
-                            <Grid
-                                inverted
-                                container
-                                stackable
-                                columns="equal"
-                                divided
-                                className="related-articles-grid"
-                            >
-                                <Grid.Row textAlign="center">
-                                    <Grid.Column>
-                                        <strong>You might also enjoy</strong>
-                                    </Grid.Column>
-                                </Grid.Row>
-                                <Grid.Row textAlign="center">
-                                    {_.map(relatedPosts, (post) => {
-                                        return (
-                                            <Grid.Column>
-                                                <PostCard
-                                                    key={post.id}
-                                                    post={post}
-                                                    views={null}
-                                                />
-                                            </Grid.Column>
-                                        );
-                                    })}
-                                </Grid.Row>
-                            </Grid>
-                        ) : (
-                            ""
-                        )}
+                        <RelatedPosts
+                            allPosts = {allPosts}
+                            post= {post}
+                        />
+                        <BuyMeACoffee />
                     </article>
                 </div>
             </Layout>

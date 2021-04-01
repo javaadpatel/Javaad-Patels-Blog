@@ -6,3 +6,5 @@ export { default as SubscribeForm } from "./SubscribeForm";
 export { default as ScrollArrow } from "./ScrollArrow";
 export { default as Header } from "./Header/Header";
 export { default as Footer } from "./Footer/Footer";
+export {default as ShareButtons} from "./ShareButtons";
+export {default as RelatedPosts} from "./RelatedPosts";

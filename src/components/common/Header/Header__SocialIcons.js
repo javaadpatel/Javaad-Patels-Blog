@@ -40,6 +40,7 @@ const Header__SocialIcons = ({ anchorClassName, imageClassName }) => {
                 className={anchorClassName}
                 target={iconData.target}
                 rel="noopener noreferrer"
+                key={iconData.name}
             >
                 <div>
                     <img
