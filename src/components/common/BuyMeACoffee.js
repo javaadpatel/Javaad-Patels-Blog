@@ -12,7 +12,9 @@ const BuyMeACoffee = ({}) => {
         script.onload = () => {
             var evt = document.createEvent("Event");
             evt.initEvent("DOMContentLoaded", false, false);
-            window.dispatchEvent(evt);
+            if (typeof window !== `undefined`) {
+                window.dispatchEvent(evt);
+            }
         };
         document.body.appendChild(script);
 
