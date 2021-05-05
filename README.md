@@ -9,7 +9,7 @@ Blog Preview:
 ### Instructions for publishing new post
 
 -   Start Ghost instance using `ghost stop && ghost start`
--   Start Gatsby blog using `npm run start`
+-   Start Gatsby blog using `npm run dev`
 -   Navigate to ghost portal http://localhost:2784/ghost/ (port depends on ghost configuration)
 -   Publish article
 -   Open port with ngrok using `ngrok http 2784`
