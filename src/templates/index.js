@@ -19,52 +19,52 @@ const { googleAnalyticsBaseUrl } = require("../utils/siteConfig");
 const Index = ({ data, location, pageContext }) => {
     const posts = data.allGhostPost.edges;
 
-    const [pageViews, setPageViews] = useState([]);
+    // const [pageViews, setPageViews] = useState([]);
 
     /**
      * Fetches google analytics page views on page load
      */
-    useEffect(() => {
-        async function fetchGooglePageViews() {
-            try {
-                const response = await axios.get(
-                    `${googleAnalyticsBaseUrl}/.netlify/functions/server/getViews`,
-                    {
-                        timeout: 5000, //ms
-                    }
-                );
+    // useEffect(() => {
+    //     async function fetchGooglePageViews() {
+    //         try {
+    //             const response = await axios.get(
+    //                 `${googleAnalyticsBaseUrl}/.netlify/functions/server/getViews`,
+    //                 {
+    //                     timeout: 5000, //ms
+    //                 }
+    //             );
 
-                if (response.status == 200) {
-                    var pageViewsArray = response.data;
-                    var pageViews = pageViewsArray.map(function (p) {
-                        return {
-                            path: p[0],
-                            views: p[1],
-                        };
-                    });
-                    setPageViews(pageViews);
-                }
-            } catch (e) {
-                console.error(`Error fetching page views. Error: ${e}`);
-            }
-        }
+    //             if (response.status == 200) {
+    //                 var pageViewsArray = response.data;
+    //                 var pageViews = pageViewsArray.map(function (p) {
+    //                     return {
+    //                         path: p[0],
+    //                         views: p[1],
+    //                     };
+    //                 });
+    //                 setPageViews(pageViews);
+    //             }
+    //         } catch (e) {
+    //             console.error(`Error fetching page views. Error: ${e}`);
+    //         }
+    //     }
 
-        if (pageViews.length == 0) {
-            fetchGooglePageViews();
-        }
-    }, [pageViews]);
+    //     if (pageViews.length == 0) {
+    //         fetchGooglePageViews();
+    //     }
+    // }, [pageViews]);
 
     /**
      * Extracts the page views from the pageViews colletion
      * @param {*} pagePath the current post's page path
      */
-    const getPageViewsForPage = (pagePath) => {
-        pagePath = `/${pagePath}/`;
-        var pageViewElement = _.find(pageViews, ["path", pagePath]);
-        if (pageViewElement !== undefined) return pageViewElement.views;
+    // const getPageViewsForPage = (pagePath) => {
+    //     pagePath = `/${pagePath}/`;
+    //     var pageViewElement = _.find(pageViews, ["path", pagePath]);
+    //     if (pageViewElement !== undefined) return pageViewElement.views;
 
-        return null;
-    };
+    //     return null;
+    // };
 
     return (
         <>
@@ -74,11 +74,7 @@ const Index = ({ data, location, pageContext }) => {
                     <section className="post-feed">
                         {posts.map(({ node }) => (
                             // The tag below includes the markup for each post - components/common/PostCard.js
-                            <PostCard
-                                key={node.id}
-                                post={node}
-                                views={getPageViewsForPage(node.slug)}
-                            />
+                            <PostCard key={node.id} post={node} />
                         ))}
                     </section>
                     <Pagination pageContext={pageContext} />
